@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Frequency" parent="Theme.Material3.DayNight.NoActionBar" />
+
+    <style name="Theme.FrequencySplash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">?attr/colorSurface</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/frequency_icon</item>
+        <item name="postSplashScreenTheme">@style/Theme.Frequency</item>
+    </style>
+</resources>

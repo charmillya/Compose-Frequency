@@ -1,0 +1,88 @@
+<resources>
+    <string name="app_name">Frequency</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="bottom_bar_1">Galaxy</string>
+    <string name="bottom_bar_2">Bonds</string>
+    <string name="bottom_bar_3">Settings</string>
+
+    <string name="galaxy_title">My Galaxy</string>
+    <string name="empty_galaxy_message">It\'s quiet in here..</string>
+    <string name="create_first_link">Create my first bond</string>
+    <string name="last_interaction_label">Last interaction</string>
+    <string name="never">Never</string>
+    <string name="interacted_button">We interacted</string>
+    <string name="close_button">Close</string>
+    <string name="date_time_format">MMMM dd, yyyy \'at\' HH:mm</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="language_section">Interface Language</string>
+    <string name="lang_fr">French (Français)</string>
+    <string name="lang_en">English</string>
+    <string name="lang_es">Spanish (Español)</string>
+    <string name="logout_button">Logout / Delete data</string>
+
+    <string name="appearance_section">Galaxy Appearance</string>
+    <string name="orbit_style_label">Orbit Style</string>
+    <string name="orbit_style_visible">Solid</string>
+    <string name="orbit_style_dotted">Dotted</string>
+    <string name="orbit_style_hidden">Hidden</string>
+
+    <string name="rotation_speed_label">Rotation Speed</string>
+    <string name="speed_static">Static</string>
+    <string name="speed_slow">Slow</string>
+    <string name="speed_normal">Normal</string>
+    <string name="speed_fast">Fast</string>
+
+    <string name="add_bond_title">New Bond</string>
+    <string name="edit_bond_title">Edit Bond</string>
+    <string name="label_name">Name *</string>
+    <string name="label_last_interaction">Last interaction *</string>
+    <string name="label_meet_date">Meeting date (optional)</string>
+    <string name="button_select_image">Select an image</string>
+    <string name="image_preview_desc">Image preview</string>
+    <string name="button_add">Add</string>
+    <string name="save_changes">Save changes</string>
+    <string name="delete_bond">Delete this bond</string>
+    <string name="delete_confirm_title">Delete bond</string>
+    <string name="delete_confirm_msg">Do you really want to delete %1$s? This action cannot be undone.</string>
+
+    <string name="error_name_required">Please enter a name</string>
+    <string name="error_date_required">Last interaction date is required</string>
+
+    <string name="bonds_list_title">My Bonds</string>
+    <string name="empty_bonds_primary">Start by adding a bond</string>
+    <string name="empty_bonds_secondary">Tap the + button below</string>
+
+    <string name="login_greeting_day">Hi there, new soul.</string>
+    <string name="login_greeting_night">Good evening, new soul.</string>
+    <string name="login_subtitle">Are you ready to create your own galaxy?</string>
+    <string name="login_as_guest">Login as guest</string>
+    <string name="login_with">Login with</string>
+    <string name="google_logo_desc">Google Logo</string>
+    <string name="lets_go">Let\'s go 🪐</string>
+    <string name="photo_of_desc">Photo of %1$s</string>
+    <string name="last_interaction_at">Last interaction on %1$s</string>
+
+    <string name="time_today">Today</string>
+    <string name="time_day_suffix">d</string>
+    <string name="time_week_suffix">week</string>
+
+    <string name="logout_title">Logout</string>
+    <string name="logout_confirmation_message">Are you sure that you want to logout? It will wipe out your data!</string>
+    <string name="confirm">I\'m logging out</string>
+
+    <string name="ignore">Ignore</string>
+
+    <string name="import_header_text">Import \n contacts</string>
+    <string name="add_manually">Add \n manually</string>
+    <string name="import_validation">Import</string>
+    <string name="save">Save</string>
+    <string name="next">Next</string>
+    <string name="no_contact">No imported contact.</string>
+    <string name="no_contact_subtext">Your contacts will appear here upon saving.</string>
+
+    <string name="made_with">Made with love by Charmillya ♡</string>
+    <string name="leave_review">Leave a review ⭐</string>
+</resources>
