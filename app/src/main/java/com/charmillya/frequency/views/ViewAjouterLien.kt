@@ -25,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.charmillya.frequency.R
 import com.charmillya.frequency.composables.BottomBarSubButton
@@ -39,6 +40,7 @@ import java.util.Locale
 
 @Composable
 fun ViewAjouterLien(
+    navController: NavHostController,
     onAjouterLienClick: () -> Unit = {},
     modifier: Modifier = Modifier,
     viewModel: ViewModelAjouterLien = viewModel()
@@ -65,6 +67,8 @@ fun ViewAjouterLien(
         stringResource(R.string.add_bond_title),
         hazeState,
         true,
+        isSubScreen = true,
+        navController = navController,
         focusManager = focusManager
     ) {
         item {
@@ -93,7 +97,7 @@ fun ViewAjouterLien(
                     .padding(horizontal = 32.dp)
                     .pointerInput(Unit) {
                         awaitPointerEventScope {
-                            while (true) { 
+                            while (true) {
                                 awaitFirstDown(pass = PointerEventPass.Initial)
                                 val upEvent =
                                     waitForUpOrCancellation(pass = PointerEventPass.Initial)
@@ -212,12 +216,4 @@ fun ViewAjouterLien(
 fun convertMillisToDate(millis: Long): String {
     val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
     return formatter.format(Date(millis))
-}
-
-@Preview
-@Composable
-private fun ViewAjouterLienPrev() {
-    FrequencyTheme() {
-        ViewAjouterLien()
-    }
 }

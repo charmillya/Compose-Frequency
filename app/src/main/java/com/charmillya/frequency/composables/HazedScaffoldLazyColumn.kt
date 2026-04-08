@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeSource
 
@@ -25,13 +26,17 @@ fun HazedScaffoldLazyColumn(
     hazeState: HazeState,
     centerItems: Boolean = false,
     focusManager: FocusManager? = null,
-    content: LazyListScope.() -> Unit
+    isSubScreen: Boolean,
+    navController: NavHostController? = null,
+    content: LazyListScope.() -> Unit,
 ) {
     Scaffold(
         topBar = {
             HazedTopAppBar(
                 text = title,
                 hazeState = hazeState,
+                isSubScreen = isSubScreen,
+                onBackClick = { navController?.popBackStack() }
             )
         }
     ) { innerPadding ->

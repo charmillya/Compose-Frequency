@@ -54,6 +54,11 @@
     <string name="bonds_list_title">Mes liens</string>
     <string name="empty_bonds_primary">Commence par ajouter un lien</string>
     <string name="empty_bonds_secondary">Appuie sur le bouton + ci-dessous</string>
+    <string name="delete_selected_count">Supprimer (%1$d)</string>
+    <string name="delete_selected_title">Supprimer les liens sélectionnés</string>
+    <string name="delete_selected_message">Voulez-vous vraiment supprimer %1$d lien(s) ? Cette action est irréversible.</string>
+    <string name="delete_selected_action">Supprimer la sélection</string>
+    <string name="clear_selection">Tout désélectionner</string>
 
     <string name="login_greeting_day">Bonjour, nouvelle âme.</string>
     <string name="login_greeting_night">Bonsoir, nouvelle âme.</string>
@@ -62,8 +67,8 @@
     <string name="login_with">Je me connecte avec</string>
     <string name="google_logo_desc">Logo Google</string>
     <string name="lets_go">C\'est parti 🪐</string>
-    <string name="photo_of_desc">Photo de %1$s</string>
-    <string name="last_interaction_at">Dernière interaction le %1$s</string>
+    <string name="photo_of_desc">Photo de </string>
+    <string name="last_interaction_at">Dernière interaction le </string>
 
     <string name="time_today">Auj.</string>
     <string name="time_day_suffix">j</string>

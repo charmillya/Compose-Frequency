@@ -91,7 +91,8 @@ fun ViewSettings(
 
     HazedScaffoldLazyColumn(
         title = stringResource(R.string.settings_title),
-        hazeState = hazeState
+        hazeState = hazeState,
+        isSubScreen = false
     ) {
         item {
             Column(modifier = Modifier.fillMaxSize().padding(horizontal = 32.dp, vertical = 24.dp)) {

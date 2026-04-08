@@ -505,7 +505,11 @@ fun ViewGalaxie(
         remember(selectedLienId, listeLiens) { listeLiens.find { it.idLien == selectedLienId } }
     var rootSize by remember { mutableStateOf(IntSize.Zero) }
 
-    HazedScaffoldLazyColumn(title = stringResource(R.string.galaxy_title), hazeState = hazeState) {
+    HazedScaffoldLazyColumn(title = stringResource(
+        R.string.galaxy_title),
+        hazeState = hazeState,
+        isSubScreen = false
+    ) {
         item {
             BoxWithConstraints(
                 modifier = Modifier
@@ -516,8 +520,8 @@ fun ViewGalaxie(
                             
                             scale = (scale * zoom).coerceIn(0.4f, 4.0f)
 
-                            
-                            
+
+
                             val newOffset = offset + pan
                             val limitRadius = (maxOrbitRadius + 300f) * scale
 
@@ -670,7 +674,7 @@ fun ViewGalaxie(
                                 val nS = noteScales[lien.idLien]?.value ?: 0f
                                 val textDir = textDirAnimatables[lien.idLien]?.value ?: 1f
 
-                                
+
                                 val interactionTime = lien.lastInteractionDay ?: 0L
                                 val daysDiff = if (interactionTime > 0) {
                                     val dateInteraction = Instant.ofEpochMilli(interactionTime)
@@ -908,9 +912,9 @@ fun DrawScope.dessinerSoleilKawaii(
                 centre.x + eyeOffsetX + vS,
                 centre.y + eyeOffsetY - vS
             ); lineTo(
-            centre.x + eyeOffsetX,
-            centre.y + eyeOffsetY
-        ); lineTo(centre.x + eyeOffsetX + vS, centre.y + eyeOffsetY + vS)
+                centre.x + eyeOffsetX,
+                centre.y + eyeOffsetY
+            ); lineTo(centre.x + eyeOffsetX + vS, centre.y + eyeOffsetY + vS)
         }
         val pressedStroke =
             Stroke(strokeWidthStandard, cap = StrokeCap.Round, join = StrokeJoin.Round)
@@ -1159,8 +1163,7 @@ fun LienDetailModal(
                         if (isDark) Color.Black.copy(0.7f) else Color.White.copy(0.8f)
                     )
                 ) {
-                    Box(modifier = Modifier.fillMaxWidth()) {
-
+                    Column(modifier = Modifier.fillMaxWidth()) {
                         DessinerEntetePhoto(
                             nom = lien.name,
                             imagePath = lien.imagePath,
@@ -1170,7 +1173,6 @@ fun LienDetailModal(
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 140.dp)
                                 .padding(24.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {

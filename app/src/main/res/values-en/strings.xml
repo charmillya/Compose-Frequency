@@ -54,6 +54,11 @@
     <string name="bonds_list_title">My Bonds</string>
     <string name="empty_bonds_primary">Start by adding a bond</string>
     <string name="empty_bonds_secondary">Tap the + button below</string>
+    <string name="delete_selected_count">Delete (%1$d)</string>
+    <string name="delete_selected_title">Delete selected bonds</string>
+    <string name="delete_selected_message">Do you really want to delete %1$d bond(s)? This action cannot be undone.</string>
+    <string name="delete_selected_action">Delete selection</string>
+    <string name="clear_selection">Clear selection</string>
 
     <string name="login_greeting_day">Hi there, new soul.</string>
     <string name="login_greeting_night">Good evening, new soul.</string>
@@ -62,8 +67,8 @@
     <string name="login_with">Login with</string>
     <string name="google_logo_desc">Google Logo</string>
     <string name="lets_go">Let\'s go 🪐</string>
-    <string name="photo_of_desc">Photo of %1$s</string>
-    <string name="last_interaction_at">Last interaction on %1$s</string>
+    <string name="photo_of_desc">Photo of </string>
+    <string name="last_interaction_at">Last interaction on </string>
 
     <string name="time_today">Today</string>
     <string name="time_day_suffix">d</string>
@@ -75,8 +80,8 @@
 
     <string name="ignore">Ignore</string>
 
-    <string name="import_header_text">Import \n contacts</string>
-    <string name="add_manually">Add \n manually</string>
+    <string name="import_header_text">Import contacts</string>
+    <string name="add_manually">Add manually</string>
     <string name="import_validation">Import</string>
     <string name="save">Save</string>
     <string name="next">Next</string>

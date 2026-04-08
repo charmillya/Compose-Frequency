@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.charmillya.frequency.R
 import com.charmillya.frequency.composables.BottomBarSubButton
 import com.charmillya.frequency.composables.DatePickerModal
@@ -69,6 +70,7 @@ import sv.lib.squircleshape.SquircleShape
 fun ViewImporterLiens(
     urisContacts: List<Uri>,
     onBack: () -> Unit,
+    navController: NavHostController,
     modifier: Modifier = Modifier,
     viewModel: ViewModelImporterLiens = viewModel()
 ) {
@@ -102,7 +104,9 @@ fun ViewImporterLiens(
 
         HazedScaffoldLazyColumn(
             title = stringResource(R.string.import_header_text),
-            hazeState = hazeState
+            hazeState = hazeState,
+            isSubScreen = true,
+            navController = navController
         ) {
             if (viewModel.isLoading) {
                 item {
@@ -169,7 +173,7 @@ fun ViewImporterLiens(
                         Spacer(modifier = Modifier.width(16.dp))
                         Column {
                             Text(text = valide.contact.nom, fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                            Text(text = stringResource(R.string.last_interaction_at) + convertMillisToDate(valide.derniereInteraction), fontSize = 12.sp, color = Color.Gray)
+                            Text(text = stringResource(R.string.last_interaction_at) + " " + convertMillisToDate(valide.derniereInteraction), fontSize = 12.sp, color = Color.Gray)
                         }
                     }
                 }
@@ -226,29 +230,18 @@ fun ViewImporterLiens(
                 visible = !viewModel.isLoading && viewModel.contactsValides.isEmpty(),
                 enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
                 exit = slideOutVertically(targetOffsetY = { it }) + fadeOut(),
-                modifier = Modifier.padding(bottom = 120.dp)
+                modifier = Modifier.padding(bottom = 16.dp)
             ) {
-                Box(
-                    modifier = Modifier
-                        .height(80.dp)
-                        .width(160.dp)
-                        .border(3.dp, gradientBrush, SquircleShape(40.dp))
-                        .clip(SquircleShape(40.dp))
-                        .hazeEffect(state = hazeState, style = HazeMaterials.ultraThin())
-                        .clickable { permissionLauncher.launch(android.Manifest.permission.READ_CONTACTS) },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        
-                        text = stringResource(R.string.import_header_text).replace("\n", " "),
-                        fontSize = 14.sp,
-                        maxLines = 1, 
-                        softWrap = false,
-                        textAlign = TextAlign.Center,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier.padding(horizontal = 4.dp)
-                    )
-                }
+                BottomBarSubButton(
+                    width = 195.dp,
+                    height = 60.dp,
+                    onClick = {
+                        permissionLauncher.launch(android.Manifest.permission.READ_CONTACTS)
+                    },
+                    hazeState = hazeState,
+                    type = "text",
+                    text = stringResource(R.string.import_header_text)
+                )
             }
 
             AnimatedVisibility(

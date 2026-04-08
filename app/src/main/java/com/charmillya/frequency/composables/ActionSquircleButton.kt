@@ -29,8 +29,8 @@ fun ActionSquircleButton(
 ) {
     Box(
         modifier = Modifier
-            .height(80.dp)
-            .width(160.dp)
+            .height(70.dp)
+            .width(180.dp)
             .border(3.dp, gradientBrush, SquircleShape(40.dp))
             .clip(SquircleShape(40.dp))
             .hazeEffect(state = hazeState, style = HazeMaterials.ultraThin())

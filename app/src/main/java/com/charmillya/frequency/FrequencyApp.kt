@@ -165,6 +165,7 @@ fun FrequencyApp(
                     exitTransition = { fadeOut() + slideOutHorizontally { -it } }
                 ) {
                     ViewAjouterLien(
+                        navController = navController,
                         onAjouterLienClick = {
                             navController.navigate(FrequencyNavigation.Liens.name) {
                                 popUpTo(FrequencyNavigation.AjouterLien.name) { inclusive = true }
@@ -180,6 +181,7 @@ fun FrequencyApp(
                     exitTransition = { fadeOut() + slideOutHorizontally { -it } }
                 ) {
                     ViewImporterLiens(
+                        navController = navController,
                         urisContacts = selectedContactUris,
                         onBack = { navController.popBackStack() }
                     )

@@ -6,14 +6,22 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.border
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
@@ -24,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
@@ -52,6 +61,11 @@ import java.util.Locale
 fun LienCard(
     lien: Lien,
     onSupprimerLien: (Lien) -> Unit,
+    onClick: () -> Unit = {},
+    onLongPress: () -> Unit = {},
+    isSelectionMode: Boolean = false,
+    isSelected: Boolean = false,
+    selectionPulseToken: Int = 0,
     modifier: Modifier = Modifier,
     viewModel: ViewModelLienCard = viewModel()
 ) {
@@ -61,6 +75,23 @@ fun LienCard(
 
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+
+    val pressScale by animateFloatAsState(
+        targetValue = if (isPressed) 0.94f else 1f,
+        animationSpec = if (isPressed) {
+            // Quick shrink with no bounce while finger stays down.
+            tween(durationMillis = 85)
+        } else {
+            // Single smooth return when the finger is released.
+            spring(
+                dampingRatio = Spring.DampingRatioNoBouncy,
+                stiffness = Spring.StiffnessMediumLow
+            )
+        },
+        label = "press_scale"
+    )
 
     var nameText by rememberSaveable { mutableStateOf(lien.name) }
     var lastInteractionDay by rememberSaveable { mutableStateOf(lien.lastInteractionDay) }
@@ -74,15 +105,44 @@ fun LienCard(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? -> if (uri != null) imageUri = uri.toString() }
 
-    Card(
-        shape = SquircleShape(20.dp),
+    Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(200.dp)
-            .clip(SquircleShape(20.dp))
-            .clickable { showBottomSheet = true }
+            .height(200.dp),
+        contentAlignment = Alignment.Center
     ) {
-        Box(modifier = Modifier.fillMaxSize()) {
+        Card(
+            shape = SquircleShape(20.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(SquircleShape(20.dp))
+                .graphicsLayer {
+                    scaleX = pressScale
+                    scaleY = pressScale
+                }
+                .border(
+                    width = if (isSelected) 2.dp else 0.dp,
+                    brush = if (isSelected) gradientBrush else Brush.verticalGradient(listOf(Color.Transparent, Color.Transparent)),
+                    shape = SquircleShape(20.dp)
+                )
+                .combinedClickable(
+                    interactionSource = interactionSource,
+                    indication = null,
+                    onClick = {
+                        if (isSelectionMode) {
+                            onClick()
+                        } else {
+                            showBottomSheet = true
+                        }
+                    },
+                    onLongClick = {
+                        if (!isSelectionMode) {
+                            onLongPress()
+                        }
+                    }
+                )
+        ) {
+            Box(modifier = Modifier.fillMaxSize()) {
             if (lien.imagePath != null) {
                 AsyncImage(model = lien.imagePath, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
                 Box(modifier = Modifier.fillMaxSize().background(Brush.verticalGradient(colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.8f)), startY = 300f)))
@@ -98,6 +158,27 @@ fun LienCard(
                     Text(stringResource(R.string.last_interaction_at, convertToDate(it)), color = Color.White.copy(alpha = 0.8f), fontSize = 14.sp)
                 }
             }
+
+            if (isSelectionMode) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(if (isSelected) Color.Black.copy(alpha = 0.25f) else Color.Black.copy(alpha = 0.1f))
+                )
+
+                if (isSelected) {
+                    Icon(
+                        imageVector = Icons.Default.CheckCircle,
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(12.dp)
+                            .size(24.dp)
+                    )
+                }
+            }
+        }
         }
     }
 
