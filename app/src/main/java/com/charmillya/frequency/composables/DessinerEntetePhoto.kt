@@ -9,33 +9,37 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.charmillya.frequency.viewmodels.ContactImport
 import compose.icons.TablerIcons
 import compose.icons.tablericons.User
 
 @Composable
 fun DessinerEntetePhoto(
     nom: String,
+    modifier: Modifier = Modifier,
     photoBitmap: ImageBitmap? = null,
-    imagePath: String? = null, 
-    height: Dp
+    imagePath: String? = null,
+    height: Dp,
+    cornerRadius: Dp = 0.dp
 ) {
     val surfaceColor = MaterialTheme.colorScheme.surface
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(height)
+            .clip(RoundedCornerShape(cornerRadius))
     ) {
         if (photoBitmap != null) {
             Image(

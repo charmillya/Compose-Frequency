@@ -7,6 +7,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
@@ -93,6 +94,21 @@ fun LienCard(
         label = "press_scale"
     )
 
+    val pulseScale = remember { Animatable(1f) }
+
+    LaunchedEffect(selectionPulseToken) {
+        if (selectionPulseToken <= 0) return@LaunchedEffect
+        pulseScale.snapTo(1f)
+        pulseScale.animateTo(targetValue = 0.95f, animationSpec = tween(durationMillis = 110))
+        pulseScale.animateTo(
+            targetValue = 1f,
+            animationSpec = spring(
+                dampingRatio = Spring.DampingRatioNoBouncy,
+                stiffness = Spring.StiffnessMediumLow
+            )
+        )
+    }
+
     var nameText by rememberSaveable { mutableStateOf(lien.name) }
     var lastInteractionDay by rememberSaveable { mutableStateOf(lien.lastInteractionDay) }
     var meetDate by rememberSaveable { mutableStateOf(lien.meetDate) }
@@ -117,8 +133,9 @@ fun LienCard(
                 .fillMaxSize()
                 .clip(SquircleShape(20.dp))
                 .graphicsLayer {
-                    scaleX = pressScale
-                    scaleY = pressScale
+                    val combinedScale = pressScale * pulseScale.value
+                    scaleX = combinedScale
+                    scaleY = combinedScale
                 }
                 .border(
                     width = if (isSelected) 2.dp else 0.dp,
@@ -129,11 +146,11 @@ fun LienCard(
                     interactionSource = interactionSource,
                     indication = null,
                     onClick = {
+                        onClick()
                         if (isSelectionMode) {
-                            onClick()
-                        } else {
-                            showBottomSheet = true
+                            return@combinedClickable
                         }
+                        showBottomSheet = true
                     },
                     onLongClick = {
                         if (!isSelectionMode) {

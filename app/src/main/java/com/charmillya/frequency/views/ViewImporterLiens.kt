@@ -173,7 +173,14 @@ fun ViewImporterLiens(
                         Spacer(modifier = Modifier.width(16.dp))
                         Column {
                             Text(text = valide.contact.nom, fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                            Text(text = stringResource(R.string.last_interaction_at) + " " + convertMillisToDate(valide.derniereInteraction), fontSize = 12.sp, color = Color.Gray)
+                            Text(
+                                text = stringResource(
+                                    R.string.last_interaction_at,
+                                    convertMillisToDate(valide.derniereInteraction)
+                                ),
+                                fontSize = 12.sp,
+                                color = Color.Gray
+                            )
                         }
                     }
                 }

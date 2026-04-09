@@ -1167,7 +1167,9 @@ fun LienDetailModal(
                         DessinerEntetePhoto(
                             nom = lien.name,
                             imagePath = lien.imagePath,
-                            height = 140.dp
+                            height = 140.dp,
+                            modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
+                            cornerRadius = 16.dp
                         )
 
                         Column(

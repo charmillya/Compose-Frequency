@@ -68,7 +68,7 @@
     <string name="google_logo_desc">Logo Google</string>
     <string name="lets_go">C\'est parti 🪐</string>
     <string name="photo_of_desc">Photo de </string>
-    <string name="last_interaction_at">Dernière interaction le </string>
+    <string name="last_interaction_at">Dernière interaction le %1$s</string>
 
     <string name="time_today">Auj.</string>
     <string name="time_day_suffix">j</string>

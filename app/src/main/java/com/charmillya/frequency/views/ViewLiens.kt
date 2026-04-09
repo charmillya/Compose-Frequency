@@ -40,6 +40,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.charmillya.frequency.R
 import com.charmillya.frequency.composables.*
 import com.charmillya.frequency.helpers.ContactSelectionContract
+import com.charmillya.frequency.helpers.rememberItemPulseController
 import com.charmillya.frequency.ui.theme.FrequencyTheme
 import com.charmillya.frequency.ui.theme.gradientBrush
 import com.charmillya.frequency.viewmodels.ViewModelLiens
@@ -66,11 +67,11 @@ fun ViewLiens(
     val listeLiens by viewModel.listeLiens.collectAsState()
     val selectedLienIds by viewModel.selectedLienIds.collectAsState()
     val isSelectionMode = selectedLienIds.isNotEmpty()
-    val selectionPulseTokens = remember { mutableStateMapOf<String, Int>() }
+    val pulseController = rememberItemPulseController<String>()
 
     val toggleSelectionWithPulse: (String) -> Unit = { lienId ->
+        pulseController.trigger(lienId)
         viewModel.toggleSelection(lienId)
-        selectionPulseTokens[lienId] = (selectionPulseTokens[lienId] ?: 0) + 1
     }
 
     var isInitialComposition by remember { mutableStateOf(true) }
@@ -94,6 +95,10 @@ fun ViewLiens(
     LaunchedEffect(Unit) {
         delay(800)
         isInitialComposition = false
+    }
+
+    LaunchedEffect(listeLiens) {
+        pulseController.retainKeys(listeLiens.map { it.idLien }.toSet())
     }
 
     Box(modifier = modifier.fillMaxSize()) {
@@ -131,8 +136,13 @@ fun ViewLiens(
                         onSupprimerLien = { viewModel.supprimerLien(lien) },
                         isSelectionMode = isSelectionMode,
                         isSelected = lien.idLien in selectedLienIds,
-                        selectionPulseToken = selectionPulseTokens[lien.idLien] ?: 0,
-                        onClick = { toggleSelectionWithPulse(lien.idLien) },
+                        selectionPulseToken = pulseController.tokenFor(lien.idLien),
+                        onClick = {
+                            pulseController.trigger(lien.idLien)
+                            if (isSelectionMode) {
+                                viewModel.toggleSelection(lien.idLien)
+                            }
+                        },
                         onLongPress = {
                             if (!isSelectionMode) {
                                 toggleSelectionWithPulse(lien.idLien)
